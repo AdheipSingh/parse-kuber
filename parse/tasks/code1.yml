@@ -1,0 +1,47 @@
+---
+ - name: INSTALL DOCKER
+   shell: curl -fsSL https://get.docker.com/ | sh
+
+ - name: ENABLE AND START DOCKER
+   service: 
+         name: docker
+         state: started
+         enabled: true
+
+ - name: CREATE DIRECTORIES
+   file:        
+        path: "{{ item }}"
+        state: directory        
+   with_items:
+        - /root/parse-server
+        - /root/parse-dashboard
+        
+ - name: INSTALL wget PACKAGE
+   yum: 
+        name: wget
+        state: latest
+
+ - name: CLONE THE REPOS
+   shell: git clone  https://github.com/parse-community/parse-server
+   args:
+        chdir: /root/parse-server
+
+ - name: CLONE THE REPOS
+   shell: git clone  https://github.com/parse-community/parse-dashboard
+   args:
+        chdir: /root/parse-dashboard
+
+
+
+ - name: CREATE DIRECTORIES
+   file: 
+        path: "{{ item }}"
+        state: directory
+   with_items: 
+        - /root/parse-server/config
+        - /root/parse-server/config
+
+ - name: CREATE MAIN.JSON
+   template: 
+        src: /root/parse-project/parse/templates/config.json.j2
+        dest: /root/parse-server/config/config.json 

@@ -1,0 +1,10 @@
+---
+ - name: INSTALL GOOGLE CLOUD FOR RHEL PLATFORMS
+   template: 
+        src: parse-project/parse/templates/repo.j2 
+        dest: /etc/yum.repos.d/google-cloud-sdk.repo
+
+ - name: YUM INSTALL 
+   yum: 
+        name: google-cloud-sdk
+        state: latest

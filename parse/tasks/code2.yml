@@ -1,0 +1,11 @@
+---
+ - name: CREATE DOCKER IMAGE FOR SERVER
+   shell: docker build -t parse-server /root/parse-server/parse-server
+
+ - name: TEMPLATE THE JSON FOR DASHBOARD
+   template: 
+        src:  /root/parse-project/parse/templates/dashboard.json.j2
+        dest: /root/parse-dashboard/parse-dashboard/Parse-Dashboard/parse-dashboard-config.json 
+
+ - name: CREATE DOCKER IMAGE FOR DASH
+   shell: docker build -t parse-dashboard /root/parse-dashboard/parse-dashboard
